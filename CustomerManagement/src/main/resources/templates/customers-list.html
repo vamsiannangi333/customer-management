@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Customer List</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<a th:href="@{/add-customer}"><button>Add Customer</button></a>
+<a th:href="@{/logout}"><button>Logout</button></a>
+
+<h1>Customer List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>UUID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Street</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="customer : ${customers}">
+        <td th:text="${customer.uuid}"></td>
+        <td th:text="${customer.first_name}"></td>
+        <td th:text="${customer.last_name}"></td>
+        <td th:text="${customer.street}"></td>
+        <td th:text="${customer.address}"></td>
+        <td th:text="${customer.city}"></td>
+        <td th:text="${customer.state}"></td>
+        <td th:text="${customer.email}"></td>
+        <td th:text="${customer.phone}"></td>
+        <td>
+            <a th:href="@{'/update-customer/' + ${customer.uuid}}" th:object="${customer}" th:with="customerObject=${customer}"><button>Edit</button></a>
+            <form th:action="@{'/delete-customer/' + ${customer.uuid}}" method="post">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
